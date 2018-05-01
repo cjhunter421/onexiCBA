@@ -1,4 +1,7 @@
 
+
+
+
 //inputs
 var principle = 20000;
 var rate = .05;
@@ -35,7 +38,9 @@ function paymentSchedule(principle,rate,paymentsPerYear,nper,pmt) {
       var interestPayment = balance*(rate/100/paymentsPerYear);
       var principlePayment = (pmt-interestPayment);
       balance -= principlePayment;
-      var periodSummary = [i, principlePayment>0?(principlePayment<pmt?principlePayment:pmt):0, interestPayment>0?interestPayment:0, balance>0?balance:0]
+      var periodSummary =
+      [i, principlePayment>0?(principlePayment<pmt?principlePayment:pmt):0,
+          interestPayment>0?interestPayment:0, balance>0?balance:0]
       schedule.push(periodSummary);
     }
     return schedule;
