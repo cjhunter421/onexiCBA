@@ -2,6 +2,9 @@
 
 
  xlsxj = require("xlsx-to-json");
+/*
+
+  
   xlsxj({
     input: "schoolCostData.xlsx",
     output: "varlist.json",
@@ -10,19 +13,19 @@
     if(err) {
       console.error(err);
     }else {
-      console.log(result);
+      console.log("It worked");
     }
   });
-
-  xlsxj = require("xlsx-to-json");
+*/
+  console.log("running");
    xlsxj({
      input: "schoolCostData.xlsx",
-     output: "varlist.json",
-     sheet: "varlist"
+     output: "sfaSmall.json",
+     sheet: "smallData"
    }, function(err, result) {
      if(err) {
        console.error(err);
      }else {
-       console.log(result);
+       console.log("It worked");
      }
    });
