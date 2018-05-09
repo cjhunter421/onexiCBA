@@ -1,15 +1,4 @@
 
-var fs = require('fs');
-
-nameMap = function(data){
-    map = [];
-    for (var i=0; i<data.length; i++){
-        map[data[i].State] = i;
-    };
-    return map;
-};
-
-
 //base case
 var housing = 1231;
 var grocery = 300;
@@ -18,11 +7,14 @@ var transportation = 100;
 var health = 50;
 var misc = 40;
 
-//include cost of living index
-var locAdjustmentData = JSON.parse(fs.readFileSync("costOfLiving.json"));
 
-//locate states in adjustment data
-var nameMap = nameMap(locAdjustmentData);
+var data = {};
+
+//include cost of living index
+$.getJSON("https://raw.githubusercontent.com/cjhunter421/onexiCBA/master/dataBuilding/costOfLiving.json", function(data){
+    var data = data;
+    
+});
 
 //INPUT city
 var cityToState = {"Atlanta" : "Georgia",
@@ -37,28 +29,23 @@ var cityToState = {"Atlanta" : "Georgia",
                    "Washington DC" : "District of Columbia"                  
 };
 
-
-
-
 expenses = [housing,grocery,utilities,transportation,health,misc];
 
 function getAdjustedExpense(data,city,expensesList){
     for (i=0;i<expensesList.length;i++){
         
         state = cityToState[city];
-        console.log(state);
-        stateIndex = nameMap[state];
-        console.log(stateIndex);
-        adjustments = [ data[stateIndex][Housing],
-                        data[stateIndex][Grocery],
-                        data[stateIndex][Utilities],
-                        data[stateIndex][Transportation],
-                        data[stateIndex][Health],
-                        data[stateIndex][Misc]];
+
+        adjustments = [ data[state]["Housing"],
+                        data[state]["Grocery"],
+                        data[state]["Utilities"],
+                        data[state]["Transportation"],
+                        data[state]["Health"],
+                        data[state]["Misc."]];
         
         var adjustedExpenses = expenses[i]*adjustments[i];
     };
     return adjustedExpenses;
 };
 
-console.log(getAdjustedExpense(locAdjustmentData,"New York",expenses));
+console.log(getAdjustedExpense(data,"New York",expenses));
