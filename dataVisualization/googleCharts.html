@@ -1,0 +1,36 @@
+
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+         ['Year', 'Income', 'Costs', 'Net', 'Net Worth'],
+         ['2020',  48000,      -50400,         -2400,         -2400],
+         ['2021',  48000,      -50400,       -2400,            -4900],
+         ['2022',  48000,      -50400,        -2400,           -7500],
+         ['2023',  48000,      -50400,        -2400,          -11000],
+         ['2024',  74000,      -52000,         22000,         11000]
+      ]);
+
+    var options = {
+      title : 'Annual Income Statement',
+      vAxis: {title: 'Money'},
+      hAxis: {title: 'Year'},
+      seriesType: 'bars',
+      series: {3: {type: 'line'}}
+    };
+
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
