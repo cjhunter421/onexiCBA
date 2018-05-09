@@ -1,7 +1,15 @@
 // generate projected cost flows
-var fs = require('fs');
+// var fs = require('fs');
 
-var data = JSON.parse(fs.readFileSync("sfaSmall.json")); 
+var data = {};
+
+$.getJSON("https://raw.githubusercontent.com/cjhunter421/onexiCBA/master/dataBuilding/trueCost.json", function(data){
+      var data = data;
+      console.log(data);
+});
+
+//var data = JSON.parse(fs.readFileSync("sfaSmall.json")); 
+
 
 nameMap = function(data){
     map = [];
@@ -11,20 +19,39 @@ nameMap = function(data){
     return map;
 };
 var nameMap = nameMap(data);
-
-console.log(data[3101].SchoolName);
-console.log(nameMap["Massachusetts Institute of Technology"]);
+console.log(nameMap);
 
 
+/*
 var mapping = [{"Bracket":"1","upper":"30000","lower":"0"},
             {"Bracket":"2","upper":"48000","lower":"30001"},
             {"Bracket":"3","upper":"75000","lower":"48001"},
             {"Bracket":"4","upper":"110000","lower":"75001"},
             {"Bracket":"5","upper":"","lower":"110001"}];
+*/
             
 var incomeVars = ["NPT412","NPT422","NPT432","NPT442","NPT452"];
 
 getBracket = function(income){
+
+    if (income == 'Less than $30,000'){
+        bracket = "NPT412"
+    }
+    else if (income == '$30,001 to $48,000'){
+        bracket = "NPT422"
+    }
+    else if (income == '$48,001 to $75,000'){
+        bracket = "NPT432"
+    }
+    else if (income == '$75,001 to $110,000'){
+        bracket = "NPT442"
+    }
+    else{
+        bracket = "NPT452"
+    };
+    return bracket
+
+    /*
     //bracket check descending
     //returns associated income quintile
     quint = 0;
@@ -35,18 +62,21 @@ getBracket = function(income){
             break;
         };
     };
-    return quint;
+    */
+
 };
 
+/*
 getBracketVar = function(bracket){
     //get the variable for the associated income bracket
     indexVar = incomeVars[bracket];
     return indexVar;
 };
+*/
 
 getNetSchoolCost = function(income,SchoolName){
 // find the relevant dataset field
-    var netVariable = getBracketVar(getBracket(income));
+    var netVariable = getBracket(income);
 //find the index of the school in the dataset
     var schoolIndex = nameMap[SchoolName];
 //return the value in the field for that school
@@ -56,6 +86,4 @@ getNetSchoolCost = function(income,SchoolName){
 };
 
 
-console.log(getNetSchoolCost(80000,"Massachusetts Institute of Technology"));
-
-
+console.log(getNetSchoolCost('$30,001 to $48,000',"Massachusetts Institute of Technology"));
